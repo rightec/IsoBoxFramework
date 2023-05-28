@@ -21,25 +21,40 @@ namespace isoBoxApi {
 
 class isoBox {
 public:
+
+    /**
+    * @brief Constructor: Member initialization
+    */
     isoBox() {
-        // Performing all initialization
         m_max_interval_temp = ISO_DEF_UNDEF_TEMP;
         m_min_interval_temp = ISO_DEF_UNDEF_TEMP;
         m_treshold_cmp_temp = ISO_DEF_TRSH__CMP_TEMP;
         m_Box_temp = ISO_DEF_UNDEF_TEMP;
         m_initDone = false;
-    }
+    };
 
+    /**
+    * @brief Destructor
+    */
+    ~isoBox() {};
+
+    /**
+     * @brief Initialization of the monitoring device system
+     * @param: temp_t _min - Minimum temperarure treshold request
+     * @param: temp_t _max - Maximum temperarure treshold request
+     * @return true if the init is OK
+     */
     bool init(temp_t _min, temp_t _max) {
         bool l_retVal = false;
         if (_max > _min) {
-            l_retVal = m_pidActuator.init();
+            l_retVal = m_pidActuator.setPoints(_min, _max);   // init();
             m_initDone = l_retVal;
             return l_retVal;
         }
         else
             return l_retVal;
-    }
+    };
+        
 
     bool getInitDone() { return m_initDone; };
 
@@ -54,6 +69,7 @@ public:
         /// Here cames the measured temperature
         /// If it is out of range we should apply compensentaion
         /// 
+        return _temp;
     }
 private:
     temp_t m_max_interval_temp;
@@ -61,6 +77,7 @@ private:
     temp_t m_treshold_cmp_temp;
     temp_t m_Box_temp;
     bool  m_initDone;
+    
     PidController m_pidActuator;
 };
 

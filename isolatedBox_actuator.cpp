@@ -1,11 +1,19 @@
 #include "isolatedBox_actuator.h"
+#ifdef ISO_PRINT_DEBUG
 #include "isolatedBox_printdebug.h"
+#endif // ISO_PRINT_DEBUG
 #include <cstdio>
 
 
 IsoActuator::IsoActuator()
 {
+#ifdef ISO_PRINT_DEBUG
     ISO_printDebug::printDebug("Initializing PWM Controller");
+#endif // ISO_PRINT_DEBUG
+    m_pwmState = DISABLED;
+    m_dutyCycle = 0;
+    m_frequency = 0;
+    m_intensity = 0;
 }
 
 IsoActuator::~IsoActuator() {}

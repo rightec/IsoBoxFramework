@@ -21,28 +21,13 @@ class PidController
 public:
     /**
      * @brief Construct a new Pid Processor object
-     *
      */
     PidController();
 
     /**
-     * @brief Delete copy constructor
-     *
-     */
-    PidController(const PidController&) = delete;
-
-    /**
-     * @brief Delete copy assignment operator
-     *
-     * @return PidController&
-     */
-    PidController& operator=(const PidController&) = delete;
-
-    /**
      * @brief Destroy the Pid Processor object
-     *
      */
-    virtual ~PidController() = default;
+     ~PidController();
 
     /**
      * @brief Initilize PID loop
@@ -50,7 +35,10 @@ public:
      * @return true success
      * @return false fail
      */
-    bool init();
+     bool init();
+
+
+     bool setPoints(temp_t _min, temp_t _max);
 
     /**
      * @brief
@@ -58,63 +46,63 @@ public:
      * @param current
      * @return timeProcess_t
      */
-    timeProcess_t Process(const temp_t current);
+     timeProcess_t Process(const temp_t current);
 
 
     /**
      * @brief Set the process temperature set point in degrees ºC
      * Min/Max:
      */
-    void setSetPoint(const temp_t _setpoint);
+     temp_t setSetPoint(const temp_t _setpoint);
 
     /**
      * @brief Get the process temperature set point
      *
      * @return temp_t
      */
-    temp_t getSetPoint() const;
+     temp_t getSetPoint() const;
 
     /**
      * @brief Set the proportional gain
      * Min/Max:
      *
      */
-    void setKp(const temp_t _k);
+     void setKp(const temp_t _k);
 
     /**
      * @brief Get the proportional gain
      *
      * @return temp_t
      */
-    temp_t getKp() const;
+     temp_t getKp() const;
 
     /**
      * @brief Set the integral gain
      * Min/Max:
      *
      */
-    void setKi(const temp_t);
+     void setKi(const temp_t);
 
     /**
      * @brief Get the integral gain
      *
      * @return temp_t
      */
-    temp_t getKi() const;
+     temp_t getKi() const;
 
     /**
      * @brief Set the derivative gain
      * Min/Max:
      *
      */
-    void setKd(const temp_t);
+     void setKd(const temp_t);
 
     /**
      * @brief Get the derivative gain
      *
      * @return temp_t
      */
-    temp_t getKd() const;
+     temp_t getKd() const;
 
 private:
     /**
@@ -197,7 +185,7 @@ private:
      * @return timeProcess_t
      */
     timeProcess_t getTransferFnctn(const temp_t _pTemp, const temp_t _iTemp,
-        const temp_t _dTemp);
+       const temp_t _dTemp);
 };
 
 

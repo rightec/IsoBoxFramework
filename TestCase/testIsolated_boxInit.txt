@@ -1,0 +1,39 @@
+#include <gtest/gtest.h>
+#include "unittest_SimpleMath/unittest_SimpleMath.h"
+#include "unittest_SimpleMath/isolatedBoxCmake.h"
+#include "unittest_SimpleMath/isolatedBox_PID.cpp"
+#include "unittest_SimpleMath/isolatedBox_actuator.cpp"
+
+using namespace isoBoxApi;
+
+
+TEST(testIsolated, boxInit)
+{
+    isoBox l_IsoBox = isoBox();
+    /// <summary>
+    ///  The initialization set points for max and min
+    /// Should remain in the phisycal range determined 
+    /// by the PID regulator (these are 20 and 100 expressed in Celsius)
+    /// </summary>
+    
+ 
+    /// First test. Both value are under the minimum  - Negative Logic
+    EXPECT_TRUE(!(l_IsoBox.init(1,2)));
+    
+    /// Second test. Both value are over the maximum   - Negative Logic
+    EXPECT_TRUE(!(l_IsoBox.init(101, 102)));
+
+    /// Third test. Min val is under the min treshold  - Negative Logic
+    EXPECT_TRUE(!(l_IsoBox.init(1, 32)));
+
+    /// Fourth test. Max val is over the max treshold  - Negative Logic
+    EXPECT_TRUE(!(l_IsoBox.init(21, 320)));
+
+    /// Fifth test. Max val = Min Val = default val  - Negative Logic
+    EXPECT_TRUE(!(l_IsoBox.init(ISO_TEMP_SP_DEFAULT, ISO_TEMP_SP_DEFAULT)));
+
+    /// Sixth test. Max val > Min Val both in the range - Positive Logic
+    EXPECT_TRUE(l_IsoBox.init(25, 50));
+    
+
+}

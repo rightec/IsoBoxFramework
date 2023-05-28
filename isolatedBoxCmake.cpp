@@ -2,27 +2,37 @@
 //
 
 #include "isolatedBoxCmake.h"
-#include<conio.h>
-#include <signal.h>
-#include "isolatedBox_dataentryqueue.h"
 
-using namespace std;
+// using namespace isoBoxApi;
 
-int main()
+
+/*
+isoBox::isoBox()
 {
-	cout << "Hello Isolated Box CMake. Main Test Running" << endl;
-
-
-    MonitoringDataQueue g_DataQueue;
-    ISO_DataEntryQueue g_dataEntryQueue(&g_DataQueue);
-    ISO_DataEntryQueue::setStopConsumerFlag(true);
-    ISO_DataEntryQueue::setStopProducerFlag(true);
-
-    std::thread l_consumer_t(&ISO_DataEntryQueue::thread_consumer, &g_dataEntryQueue);
-    std::thread l_producer_t(&ISO_DataEntryQueue::thread_producer, &g_dataEntryQueue);
-
-    l_producer_t.join();
-    l_consumer_t.join();
-
-	return 0;
+    // Performing all initialization
+    m_max_interval_temp = ISO_DEF_UNDEF_TEMP;
+    m_min_interval_temp = ISO_DEF_UNDEF_TEMP;
+    m_treshold_cmp_temp = ISO_DEF_TRSH__CMP_TEMP;
+    m_Box_temp = ISO_DEF_UNDEF_TEMP;
+    m_initDone = false;
+    
+     m_pidActuator = new PidController();
 }
+
+
+isoBoxApi::isoBox::~isoBox()
+{
+}
+
+bool isoBox::init(temp_t _min, temp_t _max)
+{
+    bool l_retVal = false;
+    if (_max > _min) {
+        l_retVal = m_pidActuator->init();
+        m_initDone = l_retVal;
+        return l_retVal;
+    }
+    else
+        return l_retVal;
+}
+*/

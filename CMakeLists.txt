@@ -12,6 +12,6 @@ file(GLOB all_SRCS
 
 
 # Add source to this project's executable.
-add_executable (isolatedBoxCmake  ${all_SRCS} "isolatedBox_actuator.cpp" "isolatedBox_PID.h" "isolatedBox_PID.cpp")
+add_executable (isolatedBoxCmake  ${all_SRCS} "isolatedBox_actuator.cpp" "isolatedBox_PID.h" "isolatedBox_PID.cpp" "main.cpp")
 
 # TODO: Add tests and install targets if needed.

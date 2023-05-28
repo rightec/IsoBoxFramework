@@ -27,10 +27,6 @@ public:
 
 	~IsoActuator();
 
-	IsoActuator(const IsoActuator& obj) = delete;
-
-	IsoActuator operator=(const IsoActuator& rhs) = delete;
-
 	bool init();
 
 	void operator!();

@@ -17,7 +17,6 @@ extern bool m_stopConsumer;
 class ISO_DataEntryQueue
 {
 public:
-   
 
     ISO_DataEntryQueue(MonitoringDataQueue * _queue);
 
@@ -25,10 +24,10 @@ public:
     void thread_consumer();
     
 
-    static bool getStopProducerFlag(); // {return m_stopProducer; }
-    static bool getStopConsumerFlag(); // {return m_stopConsumer; }
-    static void setStopProducerFlag(bool _flag); // {m_stopProducer = _flag; };
-    static void setStopConsumerFlag(bool _flag); // {m_stopConsumer = _flag; };
+    static bool getStopProducerFlag();
+    static bool getStopConsumerFlag(); 
+    static void setStopProducerFlag(bool _flag); 
+    static void setStopConsumerFlag(bool _flag); 
 
 private:
     std::mutex m_map_mutex;

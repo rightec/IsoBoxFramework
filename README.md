@@ -16,4 +16,11 @@ This component depends on a PidController class and an IsoActuator class that ma
 
 Project building by using Cmake File
 IDE used Visual Studio 2019
+
+# GOOGLE TEST CASE
+The google test case environment it is archived in another repo ... (TO WRITE THE REPO)
+
+A test case folder (TestCase) will store the test file executed in order to keep link with the commit
+
+
 ... TO BE CONTINUED
