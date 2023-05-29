@@ -26,5 +26,9 @@ The google test case environment it is archived in another repo: https://github.
 
 A test case folder (TestCase) will store the test file executed in order to keep link with the commit
 
+# DOCUMENTS
+
+A document folder will contain pdf file to show some implementation detail of the component
+
 
 
