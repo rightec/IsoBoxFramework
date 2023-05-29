@@ -1,3 +1,9 @@
+/*****************************************************************//**
+ * \file   isolatedBox_printdebug.cpp
+ * \brief: Class to manahge standard output message
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #include "isolatedBox_printdebug.h"
 
 

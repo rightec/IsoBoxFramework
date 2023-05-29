@@ -1,3 +1,13 @@
+/*****************************************************************//**
+ * \file   isolatedBox_actuator.cpp
+ * \brief: Class to manage a generic PWM 
+ * for PID actuation
+ * This class is merely a "template" framework class
+ *
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
+
 #include "isolatedBox_actuator.h"
 #ifdef ISO_PRINT_DEBUG
 #include "isolatedBox_printdebug.h"

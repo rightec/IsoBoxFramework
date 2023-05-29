@@ -1,3 +1,15 @@
+/*****************************************************************//**
+ * \file   isolatedBox_dataentryqueue.cpp
+ * \brief: Class that simulates a serialization
+ * of value coming from a temperature sensor
+ * The thread producer simulates the reading from a
+ * sensor and put them in a queue.
+ * The thread consumer takes the value from the queue and
+ * it keeps the compensation process going
+ *
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #include "isolatedBox_dataentryqueue.h"
 #include "isolatedBox_printdebug.h"
 
@@ -10,6 +22,12 @@ ISO_DataEntryQueue::ISO_DataEntryQueue(MonitoringDataQueue * _queue)
 
     if (m_DataQueue != nullptr)
         m_DataQueue->clear(); // Clear the list
+
+    /// <summary>
+    /// Iso Box application initiliazed
+    /// </summary>
+    /// <param name="_queue"></param>
+    l_IsoBox.init(25, 50);
 }
 
 
@@ -35,7 +53,7 @@ void ISO_DataEntryQueue::thread_producer()
         ISO_printDebug::printDebug(l_output);
 
         
-        for (int i = 0; i < 100; i++) {
+        for (int i = 20; i < 60; i++) {
             // Insert record in the list
 
             /// Preparing data Monitor
@@ -80,6 +98,16 @@ void ISO_DataEntryQueue::thread_consumer()
                         + l_monData.first + " " + l_monData.second;
                     ISO_printDebug::printDebug(l_output);
 
+                    std::string l_num = l_monData.first;
+                    temp_t l_temp = ::atof(l_num.c_str());
+                    temp_t l_resComp = l_IsoBox.applyCompensation(l_temp);
+                    if (l_resComp == ISO_DEF_UNDEF_TEMP) {
+                        ISO_printDebug::printDebug("Compensation NOT APPLIED for " + l_num);
+                    }
+                    else {
+                        ISO_printDebug::printDebug("Compensation RESTARTED for " + l_num);
+
+                    }
 
                     const auto p1 = std::chrono::system_clock::now();
                     l_output =  "ISO_DataEntryQueue::thread_consumer: TimeStamp - seconds since epoch: "

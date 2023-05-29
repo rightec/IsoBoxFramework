@@ -1,3 +1,9 @@
+/*****************************************************************//**
+ * \file   SharedQueue.h
+ * \brief:Template class to manage a queue
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #ifndef SHAREDQUEUE_H
 #define SHAREDQUEUE_H
 

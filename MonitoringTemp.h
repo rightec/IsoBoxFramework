@@ -1,3 +1,9 @@
+/*****************************************************************//**
+ * \file   MonitoringTemp.h
+ * \brief: Derived class from template SharedQueue
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #ifndef MONITORINGTEMP_H
 #define MONITORINGTEMP_H
 

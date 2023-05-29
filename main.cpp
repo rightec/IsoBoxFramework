@@ -1,3 +1,13 @@
+/*****************************************************************//**
+ * \file   main.cpp
+ * \brief: Application the serialize temperature 
+ *  value from a "virtual" temperature sensor and
+ *  send the values to the temperature controller class
+ *  to stimulate the relevant PID controller
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
+
 #include "isolatedBox_dataentryqueue.h"
 
 using namespace std;

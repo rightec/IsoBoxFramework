@@ -1,3 +1,9 @@
+/*****************************************************************//**
+ * \file   isolatedBox_printdebug.h
+ * \brief: Class to manahge standard output message
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #ifndef ISO_PRINTDEBUG_H
 #define ISO_PRINTDEBUG_H
 

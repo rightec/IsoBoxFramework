@@ -1,3 +1,12 @@
+/*****************************************************************//**
+ * \file   isolatedBox_actuator.h
+ * \brief: Class to manage a generic PWM
+ * for PID actuation
+ * This class is merely a "template" framework class
+ *
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
 #ifndef _ISO_ACTUATOR_H_
 #define _ISO_ACTUATOR_H_
 

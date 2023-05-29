@@ -1,3 +1,16 @@
+/*****************************************************************//**
+ * \file   isolatedBox_dataentryqueue.h
+ * \brief: Class that simulates a serialization
+ * of value coming from a temperature sensor
+ * The thread producer simulates the reading from a 
+ * sensor and put them in a queue.
+ * The thread consumer takes the value from the queue and 
+ * it keeps the compensation process going
+ *
+ * \author F.Morani
+ * \date   May 2023
+***********************************************************************/
+
 #ifndef ISO_DATAENTRYQUEUE_H
 #define ISO_DATAENTRYQUEUE_H
 
@@ -10,9 +23,12 @@
 #include <iostream>
 
 #include "MonitoringTemp.h"
+#include "isolatedBoxCmake.h"
 
 extern bool m_stopProducer;
 extern bool m_stopConsumer;
+
+using namespace isoBoxApi;
 
 class ISO_DataEntryQueue
 {
@@ -33,6 +49,7 @@ private:
     std::mutex m_map_mutex;
     MonitoringDataQueue *m_DataQueue = nullptr;
     uint32_t m_counter = 0;
+    isoBox l_IsoBox;
 
 
 };
