@@ -6,7 +6,8 @@
 
 
  PidController::PidController()
-     : m_parameterLimits(ISO_TEMP_MIN_SP, ISO_TEMP_MAX_SP, ISO_TEMP_SP_DEFAULT)
+     : m_parameterLimits(ISO_TEMP_MIN_SP, ISO_TEMP_MAX_SP, ISO_TEMP_SP_DEFAULT),
+     m_setPointLimits(ISO_TEMP_MIN_SP, ISO_TEMP_MAX_SP, ISO_TEMP_SP_DEFAULT)
 {
 #ifdef ISO_PRINT_DEBUG
     ISO_printDebug::printDebug("InitializingP ID Controller");
@@ -43,6 +44,7 @@ bool PidController::setPoints(temp_t _min, temp_t _max)
             setSetPoint(PID_MIN_SET_POINT, _min);
             setSetPoint(PID_MAX_SET_POINT, _max);
             m_targetSetPoint = getSetPoint(PID_MIN_SET_POINT);
+            m_setPointLimits = ParameterLimits(_min, _max, _min);
         }
         else
         {
@@ -56,6 +58,7 @@ bool PidController::setPoints(temp_t _min, temp_t _max)
             setSetPoint(PID_MIN_SET_POINT, PID_SET_POINT_UNAVAILABLE);
             setSetPoint(PID_MAX_SET_POINT, PID_SET_POINT_UNAVAILABLE);
             m_targetSetPoint = getSetPoint(PID_MIN_SET_POINT);
+            m_setPointLimits = m_parameterLimits;
             lRetVal = false;
         }
     return lRetVal;
@@ -79,12 +82,25 @@ bool PidController::init()
 timeProcess_t PidController::Process(const temp_t _current) {
     // TO DO
 
+    /// <summary>
+    /// This is a dummy function
+    /// Once the target has been changed we restart the
+    /// PID compensation process by uisng this function
+    /// </summary>
+    /// <param name="_current"></param>
+    /// <returns></returns>
     timeProcess_t lret{};
     
     // TO IMPLEMENT
 
     return lret;
 }
+
+temp_t PidController::testCurrentTemp(temp_t _curTemp)
+{
+    return m_setPointLimits.validate(_curTemp);
+}
+
 
 temp_t PidController::testSetPoint(const temp_t _input)
 {

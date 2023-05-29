@@ -59,6 +59,8 @@ public:
      timeProcess_t Process(const temp_t current);
 
 
+     temp_t testCurrentTemp(temp_t _curTemp);
+
     /**
      * @brief Verify if the temperature is allowed in degrees ºC
      * Min/Max:
@@ -172,6 +174,8 @@ private:
      *
      */
     ParameterLimits m_parameterLimits;
+
+    ParameterLimits m_setPointLimits;
 
     /**
      * @brief Get temperature error

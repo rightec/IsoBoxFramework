@@ -53,7 +53,9 @@ public:
     */
     temp_t getTargetPoint() { return m_pidActuator.m_targetSetPoint; }
 
-    float applyCompensation(float _temp);
+    float applyCompensation(temp_t _temp);
+
+    PID_SET_POINTS_t getDistancePoint(temp_t _temp);
    
 private:
     temp_t m_max_interval_temp;
