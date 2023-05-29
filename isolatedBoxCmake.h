@@ -25,14 +25,7 @@ public:
     /**
     * @brief Constructor: Member initialization
     */
-    isoBox() {
-        m_max_interval_temp = ISO_DEF_UNDEF_TEMP;
-        m_min_interval_temp = ISO_DEF_UNDEF_TEMP;
-        m_treshold_cmp_temp = ISO_DEF_TRSH__CMP_TEMP;
-        m_Box_temp = ISO_DEF_UNDEF_TEMP;
-        m_initDone = false;
-    };
-
+    isoBox(); 
     /**
     * @brief Destructor
     */
@@ -44,33 +37,24 @@ public:
      * @param: temp_t _max - Maximum temperarure treshold request
      * @return true if the init is OK
      */
-    bool init(temp_t _min, temp_t _max) {
-        bool l_retVal = false;
-        if (_max > _min) {
-            l_retVal = m_pidActuator.setPoints(_min, _max);   // init();
-            m_initDone = l_retVal;
-            return l_retVal;
-        }
-        else
-            return l_retVal;
-    };
+    bool init(temp_t _min, temp_t _max); 
         
 
     bool getInitDone() { return m_initDone; };
 
+    temp_t getSetPoint(int _point) { return m_pidActuator.getSetPoint(_point); }
+
+
+    temp_t setTargetPoint(uint8_t _point) { return m_pidActuator.setTargetPoint(_point); }
+
     /**
-    * Set the sample class name.
-    *
-    * \param float _temp The current value of 
-    * \return a sample return value
+    * @brief Returns the value of the target point
+    * @return temp_t
     */
-    float applyCompensation(float _temp)
-    {
-        /// Here cames the measured temperature
-        /// If it is out of range we should apply compensentaion
-        /// 
-        return _temp;
-    }
+    temp_t getTargetPoint() { return m_pidActuator.m_targetSetPoint; }
+
+    float applyCompensation(float _temp);
+   
 private:
     temp_t m_max_interval_temp;
     temp_t m_min_interval_temp;

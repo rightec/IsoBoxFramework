@@ -12,6 +12,16 @@
 #include "isolatedBox_common.h"
 #include "isolatedBox_actuator.h"
 
+/// <summary>
+/// PID could manage PID_MAX_NUM_POINTS set points
+/// </summary>
+typedef enum PID_SET_POINTS {
+    PID_MIN_SET_POINT,
+    PID_MAX_SET_POINT,
+    PID_MAX_NUM_POINTS
+}PID_SET_POINTS_t;
+
+#define PID_SET_POINT_UNAVAILABLE       65535
 /**
  * @brief Pid Processor 
  */
@@ -50,17 +60,29 @@ public:
 
 
     /**
-     * @brief Set the process temperature set point in degrees ºC
+     * @brief Verify if the temperature is allowed in degrees ºC
      * Min/Max:
      */
-     temp_t setSetPoint(const temp_t _setpoint);
+     temp_t testSetPoint(const temp_t _setpoint);
 
     /**
      * @brief Get the process temperature set point
-     *
+     * @param int _point - Index of the set point array
      * @return temp_t
      */
-     temp_t getSetPoint() const;
+     temp_t getSetPoint(uint8_t _point) const;
+
+
+     temp_t setTargetPoint(uint8_t _point);
+
+
+     /**
+    * @brief Set the process temperature set point
+    * @param int _point - Index of the set point array
+    * #param temp_t _setPoint - Temperature to set
+    * @return temp_t
+    */
+     temp_t setSetPoint(int _point, temp_t _setPoint);
 
     /**
      * @brief Set the proportional gain
@@ -104,6 +126,12 @@ public:
      */
      temp_t getKd() const;
 
+     /**
+     * @brief The target set point of the device is one of the
+       m_setPoint array
+     */
+     temp_t m_targetSetPoint;
+
 private:
     /**
     * @brief The PWM class that manages actuation
@@ -111,9 +139,10 @@ private:
     IsoActuator m_pwmActuator;
 
     /**
-     * @brief The set point is the desired process value.     *
+     * @brief The set point is the desired process value.
      */
-    temp_t m_setPoint;
+    temp_t m_setPoint[PID_MAX_NUM_POINTS];
+
 
     /**
      * @brief Proportional gain

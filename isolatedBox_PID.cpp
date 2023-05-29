@@ -11,7 +11,9 @@
 #ifdef ISO_PRINT_DEBUG
     ISO_printDebug::printDebug("InitializingP ID Controller");
 #endif
-    m_setPoint = 0.0;
+    m_setPoint[PID_MIN_SET_POINT] = PID_SET_POINT_UNAVAILABLE;
+    m_setPoint[PID_MAX_SET_POINT] = PID_SET_POINT_UNAVAILABLE;
+    m_targetSetPoint = PID_SET_POINT_UNAVAILABLE;
     m_kp = 0.0;
     m_ki = 0.0;
     m_kd = 0.0;
@@ -28,10 +30,34 @@ PidController::~PidController()
 bool PidController::setPoints(temp_t _min, temp_t _max)
 {
     bool lRetVal = false;
-    if (setSetPoint(_min) == _min)
-        if (setSetPoint(_max) == _max)
+    if (testSetPoint(_min) == _min)
+        if (testSetPoint(_max) == _max) {
             lRetVal = true;
-        else lRetVal = false;
+            /// <summary>
+            /// Test points are valid - We can set both
+            /// The target set point by default is the Minimum one
+            /// </summary>
+            /// <param name="_min"></param>
+            /// <param name="_max"></param>
+            /// <returns></returns>
+            setSetPoint(PID_MIN_SET_POINT, _min);
+            setSetPoint(PID_MAX_SET_POINT, _max);
+            m_targetSetPoint = getSetPoint(PID_MIN_SET_POINT);
+        }
+        else
+        {
+            /// <summary>
+            /// In case of faillure we set both target points
+            /// unavaialble
+            /// </summary>
+            /// <param name="_min"></param>
+            /// <param name="_max"></param>
+            /// <returns></returns>
+            setSetPoint(PID_MIN_SET_POINT, PID_SET_POINT_UNAVAILABLE);
+            setSetPoint(PID_MAX_SET_POINT, PID_SET_POINT_UNAVAILABLE);
+            m_targetSetPoint = getSetPoint(PID_MIN_SET_POINT);
+            lRetVal = false;
+        }
     return lRetVal;
 }
 
@@ -60,15 +86,43 @@ timeProcess_t PidController::Process(const temp_t _current) {
     return lret;
 }
 
-temp_t PidController::setSetPoint(const temp_t _input)
+temp_t PidController::testSetPoint(const temp_t _input)
 {
-    m_setPoint = m_parameterLimits.validate(_input);
-    return m_setPoint;
+    return  m_parameterLimits.validate(_input);
 }
 
-temp_t PidController::getSetPoint() const 
+temp_t PidController::getSetPoint(uint8_t _point) const
 { 
-    return m_setPoint; 
+    if (-1 < _point < PID_MAX_NUM_POINTS) {
+        return m_setPoint[_point];
+    }
+    else {
+        return PID_SET_POINT_UNAVAILABLE;
+    }
+     
+}
+
+temp_t PidController::setTargetPoint(uint8_t _point)
+{
+    if (_point < PID_MAX_NUM_POINTS) {
+        m_targetSetPoint = m_setPoint[_point];
+        return m_targetSetPoint;
+    }
+    else {
+        return PID_SET_POINT_UNAVAILABLE;
+    }
+}
+
+temp_t PidController::setSetPoint(int _point, temp_t _setPoint)
+{
+    if ((-1 < _point) && (_point < PID_MAX_NUM_POINTS)) {
+        m_setPoint[_point] = _setPoint;
+        return _setPoint;
+    }
+    else {
+        return PID_SET_POINT_UNAVAILABLE;
+    }
+
 }
 
 void PidController::setKp(const temp_t _input)
